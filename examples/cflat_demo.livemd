@@ -1,0 +1,43 @@
+# C♭ Demo
+
+```elixir
+Mix.install([
+  {:cflat, "~> 0.1.3"},
+  {:kino, "~> 0.14.2"}
+])
+```
+
+## Input Code
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+kino = Kino.Input.textarea("Insert C♭ code:", default: "int i = 42;", monospace: true)
+```
+
+```elixir
+kino
+  |> Kino.Input.read()
+  |> Cflat.tokenize()
+```
+
+## Parse
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+ast =
+  kino
+  |> Kino.Input.read()
+  |> Cflat.tokenize()
+  |> Cflat.parse()
+```
+
+## Evaluate
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+ast
+|> Cflat.Interpreter.evaluate()
+```

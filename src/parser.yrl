@@ -1,5 +1,5 @@
 Nonterminals stmts stmt expr name type.
-Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' number identifier true false if else.
+Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' eq neq lt gt leq geq number identifier true false if else while.
 Rootsymbol stmts.
 
 %% operator precedence and associativity
@@ -7,6 +7,12 @@ Left 200 '*'.
 Left 200 '/'.
 Left 100 '+'.
 Left 100 '-'.
+Left  50 eq.
+Left  50 neq.
+Left  50 lt.
+Left  50 gt.
+Left  50 leq.
+Left  50 geq.
 Left 400 else.
 
 name -> identifier : update_id('$1', name).
@@ -17,17 +23,25 @@ type -> type '[' ']' : {type, aggregate_location('$1', '$3'), '$1', '$2', '$3'}.
 expr -> true : '$1'.
 expr -> false : '$1'.
 expr -> number : '$1'.
+expr -> identifier : '$1'.
 expr -> '(' expr ')' : '$2'.
 expr -> expr '*' expr : {op_mul, aggregate_location('$1', '$3'), '$1', '$3'}.
 expr -> expr '/' expr : {op_div, aggregate_location('$1', '$3'), '$1', '$3'}.
 expr -> expr '+' expr : {op_add, aggregate_location('$1', '$3'), '$1', '$3'}.
 expr -> expr '-' expr : {op_sub, aggregate_location('$1', '$3'), '$1', '$3'}.
+expr -> expr eq expr  : {op_eq, aggregate_location('$1', '$3'), '$1', '$3'}.
+expr -> expr neq expr : {op_neq, aggregate_location('$1', '$3'), '$1', '$3'}.
+expr -> expr lt expr  : {op_lt, aggregate_location('$1', '$3'), '$1', '$3'}.
+expr -> expr gt expr  : {op_gt, aggregate_location('$1', '$3'), '$1', '$3'}.
+expr -> expr leq expr : {op_leq, aggregate_location('$1', '$3'), '$1', '$3'}.
+expr -> expr geq expr : {op_geq, aggregate_location('$1', '$3'), '$1', '$3'}.
 
 stmt -> ';' : {empty, aggregate_location('$1', '$1')}.
 stmt -> type name '=' expr ';' : {declassign, aggregate_location('$1', '$4'), '$1', '$2', '$4'}.
 stmt -> name '=' expr ';' : {assign, aggregate_location('$1', '$4'), '$1', '$3'}.
 stmt -> if '(' expr ')' stmt : {branch, aggregate_location('$1', '$5'), '$3', '$5', nil}.
 stmt -> if '(' expr ')' stmt else stmt : {branch, aggregate_location('$1', '$7'), '$3', '$5', '$7'}.
+stmt -> while '(' expr ')' stmt : {while, aggregate_location('$1', '$5'), '$3', '$5'}.
 stmt -> '{' stmts '}' : {block, aggregate_location('$1', '$3'), '$2'}.
 
 %stmts -> stmt stmts : build_sequence(stmts, aggregate_location('$1', '$2'), '$1', '$2').

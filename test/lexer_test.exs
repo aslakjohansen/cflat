@@ -46,6 +46,60 @@ defmodule CflatLexerTest do
     assert {:=, _} = equals
   end
   
+  test "operator eq" do
+    parts = Cflat.tokenize("==")
+    [value] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:eq, _} = value
+  end
+  
+  test "operator neq" do
+    parts = Cflat.tokenize("!=")
+    [value] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:neq, _} = value
+  end
+  
+  test "operator lt" do
+    parts = Cflat.tokenize("<")
+    [value] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:lt, _} = value
+  end
+  
+  test "operator gt" do
+    parts = Cflat.tokenize(">")
+    [value] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:gt, _} = value
+  end
+  
+  test "operator leq" do
+    parts = Cflat.tokenize("<=")
+    [value] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:leq, _} = value
+  end
+  
+  test "operator geq" do
+    parts = Cflat.tokenize(">=")
+    [value] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:geq, _} = value
+  end
+  
   test "semicolon" do
     parts = Cflat.tokenize(";")
     [semicolon] = parts

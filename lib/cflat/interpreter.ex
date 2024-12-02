@@ -12,6 +12,9 @@ defmodule Cflat.Interpreter do
   defp eval_expr(state, {:number, _, number}) do
     {state, number}
   end
+  defp eval_expr(state, {:identifier, _, name}) do
+    {state, Map.get(state, name)}
+  end
   defp eval_expr(state, {:op_add, _, lhs_expr, rhs_expr}) do
     {state, lhs_value} = eval_expr(state, lhs_expr)
     {state, rhs_value} = eval_expr(state, rhs_expr)
@@ -31,6 +34,36 @@ defmodule Cflat.Interpreter do
     {state, lhs_value} = eval_expr(state, lhs_expr)
     {state, rhs_value} = eval_expr(state, rhs_expr)
     {state, lhs_value / rhs_value}
+  end
+  defp eval_expr(state, {:op_eq, _, lhs_expr, rhs_expr}) do
+    {state, lhs_value} = eval_expr(state, lhs_expr)
+    {state, rhs_value} = eval_expr(state, rhs_expr)
+    {state, lhs_value == rhs_value}
+  end
+  defp eval_expr(state, {:op_neq, _, lhs_expr, rhs_expr}) do
+    {state, lhs_value} = eval_expr(state, lhs_expr)
+    {state, rhs_value} = eval_expr(state, rhs_expr)
+    {state, lhs_value != rhs_value}
+  end
+  defp eval_expr(state, {:op_lt, _, lhs_expr, rhs_expr}) do
+    {state, lhs_value} = eval_expr(state, lhs_expr)
+    {state, rhs_value} = eval_expr(state, rhs_expr)
+    {state, lhs_value < rhs_value}
+  end
+  defp eval_expr(state, {:op_gt, _, lhs_expr, rhs_expr}) do
+    {state, lhs_value} = eval_expr(state, lhs_expr)
+    {state, rhs_value} = eval_expr(state, rhs_expr)
+    {state, lhs_value > rhs_value}
+  end
+  defp eval_expr(state, {:op_leq, _, lhs_expr, rhs_expr}) do
+    {state, lhs_value} = eval_expr(state, lhs_expr)
+    {state, rhs_value} = eval_expr(state, rhs_expr)
+    {state, lhs_value <= rhs_value}
+  end
+  defp eval_expr(state, {:op_geq, _, lhs_expr, rhs_expr}) do
+    {state, lhs_value} = eval_expr(state, lhs_expr)
+    {state, rhs_value} = eval_expr(state, rhs_expr)
+    {state, lhs_value >= rhs_value}
   end
   defp eval_expr(_state, _) do
     IO.puts("hits eval_expr fallback :-(")
@@ -54,9 +87,19 @@ defmodule Cflat.Interpreter do
   defp eval_stmt(state, {:branch, _, condition, true_stmt, false_stmt}) do
     {state, value} = eval_expr(state, condition)
     if value==true do
-      eval_stmt(state, true_stmt);
+      eval_stmt(state, true_stmt)
     else
-      eval_stmt(state, false_stmt);
+      eval_stmt(state, false_stmt)
+    end
+  end
+  defp eval_stmt(state, {:while, _, condition, stmt} = full) do
+    {state, value} = eval_expr(state, condition)
+    if value==true do
+      state
+      |> eval_stmt(stmt)
+      |> eval_stmt(full)
+    else
+      state
     end
   end
   defp eval_stmt(_state, _stmt) do

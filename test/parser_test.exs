@@ -26,6 +26,146 @@ defmodule CflatParserTest do
             nil} = ast
   end
   
+  test "operator +" do
+    ast = parse("var = 1 + 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_add, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator -" do
+    ast = parse("var = 1 - 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_sub, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator *" do
+    ast = parse("var = 1 * 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_mul, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator /" do
+    ast = parse("var = 1 / 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_div, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator ==" do
+    ast = parse("var = 1 == 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_eq, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator !=" do
+    ast = parse("var = 1 != 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_neq, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator <" do
+    ast = parse("var = 1 < 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_lt, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator >" do
+    ast = parse("var = 1 > 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_gt, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator <=" do
+    ast = parse("var = 1 <= 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_leq, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "operator >=" do
+    ast = parse("var = 1 >= 2;")
+    
+    assert {:stmts, _,
+            {:assign, _,
+             {:name, _, "var"},
+             {:op_geq, _,
+              {:number, _, 1},
+              {:number, _, 2}
+             }
+            },
+            nil} = ast
+  end
+  
   test "branch minimal without else" do
     ast = parse("if(true);")
     
@@ -95,6 +235,61 @@ defmodule CflatParserTest do
                nil
               }
              }
+            },
+            nil} = ast
+  end
+  
+  test "loop while minimal" do
+    ast = parse("while(true);")
+    
+    assert {:stmts, _,
+            {:while, _,
+             {:true, _},
+             {:empty, _}
+            },
+            nil} = ast
+  end
+  
+  test "loop while minimal block" do
+    ast = parse("while(true){;}")
+    
+    assert {:stmts, _,
+            {:while, _,
+             {:true, _},
+             {:block, _,
+              {:stmts, _,
+               {:empty, _},
+               nil
+              }
+             }
+            },
+            nil} = ast
+  end
+  
+  test "loop while assignment as statement" do
+    ast = parse("while(true) v = 42;")
+    
+    assert {:stmts, _,
+            {:while, _,
+             {:true, _},
+             {:assign, _,
+              {:name, _, "v"},
+              {:number, _, 42}
+             }
+            },
+            nil} = ast
+  end
+  
+  test "loop while with real condition" do
+    ast = parse("while(i==42);")
+    
+    assert {:stmts, _,
+            {:while, _,
+             {:op_eq, _,
+              {:identifier, _, "i"},
+              {:number, _, 42}
+             },
+             {:empty, _}
             },
             nil} = ast
   end

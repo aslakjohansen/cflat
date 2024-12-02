@@ -43,4 +43,22 @@ defmodule CflatInterpreterTest do
     
     env_assert(env, %{"v" => 2})
   end
+  
+  test "branch when true block" do
+    env = evaluate("int v1 = 0; int v2 = 1; if (true) {v1=3; v2=4;}")
+    
+    env_assert(env, %{"v1" => 3, "v2" => 4})
+  end
+  
+  test "branch when false block without else" do
+    env = evaluate("int v1 = 0; int v2 = 1; if (false) {v1=3; v2=4;}")
+    
+    env_assert(env, %{"v1" => 0, "v2" => 1})
+  end
+  
+  test "branch when false block with else" do
+    env = evaluate("int v1 = 0; int v2 = 1; if (false) {v1=3; v2=4;} else {v1=5; v2=6;}")
+    
+    env_assert(env, %{"v1" => 5, "v2" => 6})
+  end
 end

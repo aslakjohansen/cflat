@@ -26,6 +26,8 @@ Rules.
 \;            : {token, {';',    produce_position(TokenLine,TokenCol,TokenLen)}}.
 \[            : {token, {'[',    produce_position(TokenLine,TokenCol,TokenLen)}}.
 \]            : {token, {']',    produce_position(TokenLine,TokenCol,TokenLen)}}.
+\{            : {token, {'{',    produce_position(TokenLine,TokenCol,TokenLen)}}.
+\}            : {token, {'}',    produce_position(TokenLine,TokenCol,TokenLen)}}.
 {WHITESPACE}+ : skip_token.
 
 Erlang code.

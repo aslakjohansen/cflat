@@ -48,6 +48,9 @@ defmodule Cflat.Interpreter do
     {state, value} = eval_expr(state, rhs)
     state |> Map.put(name, value)
   end
+  defp eval_stmt(state, {:block, _, stmts}) do
+    eval_stmts(state, stmts)
+  end
   defp eval_stmt(state, {:branch, _, condition, true_stmt, false_stmt}) do
     {state, value} = eval_expr(state, condition)
     if value==true do

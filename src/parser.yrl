@@ -1,5 +1,5 @@
 Nonterminals stmts stmt expr name type.
-Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' number identifier true false if else.
+Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' number identifier true false if else.
 Rootsymbol stmts.
 
 %% operator precedence and associativity
@@ -23,10 +23,12 @@ expr -> expr '/' expr : {op_div, aggregate_location('$1', '$3'), '$1', '$3'}.
 expr -> expr '+' expr : {op_add, aggregate_location('$1', '$3'), '$1', '$3'}.
 expr -> expr '-' expr : {op_sub, aggregate_location('$1', '$3'), '$1', '$3'}.
 
+stmt -> ';' : {empty, aggregate_location('$1', '$1')}.
 stmt -> type name '=' expr ';' : {declassign, aggregate_location('$1', '$4'), '$1', '$2', '$4'}.
 stmt -> name '=' expr ';' : {assign, aggregate_location('$1', '$4'), '$1', '$3'}.
 stmt -> if '(' expr ')' stmt : {branch, aggregate_location('$1', '$5'), '$3', '$5', nil}.
 stmt -> if '(' expr ')' stmt else stmt : {branch, aggregate_location('$1', '$7'), '$3', '$5', '$7'}.
+stmt -> '{' stmts '}' : {block, aggregate_location('$1', '$3'), '$2'}.
 
 %stmts -> stmt stmts : build_sequence(stmts, aggregate_location('$1', '$2'), '$1', '$2').
 stmts -> stmt stmts : {stmts, aggregate_location('$1', '$2'), '$1', '$2'}.

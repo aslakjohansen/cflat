@@ -9,7 +9,8 @@ defmodule Cflat.MixProject do
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
-      deps: deps()
+      deps: deps(),
+      compilers: [:yecc, :leex] ++ Mix.compilers()
     ]
   end
 
@@ -23,6 +24,7 @@ defmodule Cflat.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

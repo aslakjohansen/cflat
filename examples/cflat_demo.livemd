@@ -15,14 +15,6 @@ Mix.install([
 kino = Kino.Input.textarea("Insert C♭ code:", default: "int i = 42;", monospace: true)
 ```
 
-<!-- livebook:{"reevaluate_automatically":true} -->
-
-```elixir
-kino
-  |> Kino.Input.read()
-  |> Cflat.tokenize()
-```
-
 ## Parse
 
 <!-- livebook:{"reevaluate_automatically":true} -->

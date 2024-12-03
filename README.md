@@ -1,12 +1,12 @@
 # Cflat
 
-This package implements the C♭ langauge (pronounced C-flat). It aims to implement the procedural subset of C#.
+This package implements the C♭ language (pronounced C-flat). It aims to implement the procedural subset of C#.
 
 Currently, it supports:
 - integers and booleans.
 - variable declarations and assignments in one statement.
 - variable assignments
-- branches with `if` ad `else`.
+- branches with `if` and `else`.
 - blocks.
 - while and do-while loops.
 

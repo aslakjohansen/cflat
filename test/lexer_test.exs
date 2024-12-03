@@ -153,4 +153,40 @@ defmodule CflatLexerTest do
     assert length(parts) == 1
     assert {:for, _} = keyword
   end
+  
+  test "Console.Write" do
+    parts = Cflat.tokenize("Console.Write")
+    [keyword] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:print, _} = keyword
+  end
+  
+  test "Console.WriteLine" do
+    parts = Cflat.tokenize("Console.WriteLine")
+    [keyword] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:println, _} = keyword
+  end
+  
+  test "string empty" do
+    parts = Cflat.tokenize("\"\"")
+    [keyword] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:string, _, ""} = keyword
+  end
+  
+  test "string hello" do
+    parts = Cflat.tokenize("\"hello\"")
+    [keyword] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:string, _, "hello"} = keyword
+  end
 end

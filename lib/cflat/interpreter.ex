@@ -12,6 +12,9 @@ defmodule Cflat.Interpreter do
   defp eval_expr(state, {:number, _, number}) do
     {state, number}
   end
+  defp eval_expr(state, {:string, _, value}) do
+    {state, value}
+  end
   defp eval_expr(state, {:identifier, _, name}) do
     {state, Map.get(state, name)}
   end
@@ -126,6 +129,16 @@ defmodule Cflat.Interpreter do
     state
     |> eval_stmt(stmt_init)
     |> eval_stmt({:for, location, nil, condition, stmt_update, stmt_body})
+  end
+  defp eval_stmt(state, {:print, _, expr}) do
+    {state, value} = eval_expr(state, expr)
+    IO.write(value)
+    state
+  end
+  defp eval_stmt(state, {:println, _, expr}) do
+    {state, value} = eval_expr(state, expr)
+    IO.puts(value)
+    state
   end
   defp eval_stmt(_state, _stmt) do
     IO.puts("hits eval_stmt fallback :-(")

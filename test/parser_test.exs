@@ -311,4 +311,14 @@ defmodule CflatParserTest do
             },
             nil} = ast
   end
+  
+  test "print hello" do
+    ast = parse("Console.Write(\"hello\");")
+    
+    assert {:stmts, _,
+            {:print, _,
+             {:string, _, "hello"}
+            },
+            nil} = ast
+  end
 end

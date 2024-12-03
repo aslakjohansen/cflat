@@ -10,6 +10,7 @@ Currently, it supports:
 - blocks.
 - while and do-while loops.
 - for loops are tokenized but fails to parse.
+- strings can be printed but is not handled nicely.
 
 Functionality implemented:
 - Lexing
@@ -24,7 +25,7 @@ The package can be installed by adding `cflat` to your list of dependencies in `
 ```elixir
 def deps do
   [
-    {:cflat, "~> 0.2.1"}
+    {:cflat, "~> 0.2.2"}
   ]
 end
 ```

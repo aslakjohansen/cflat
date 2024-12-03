@@ -1,5 +1,5 @@
 Nonterminals stmts stmt expr name type.
-Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' eq neq lt gt leq geq number identifier true false if else while do for.
+Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' eq neq lt gt leq geq string number identifier true false if else while do for print println.
 Rootsymbol stmts.
 
 %% operator precedence and associativity
@@ -23,6 +23,7 @@ type -> type '[' ']' : {type, aggregate_location('$1', '$3'), '$1', '$2', '$3'}.
 
 expr -> true : '$1'.
 expr -> false : '$1'.
+expr -> string : '$1'.
 expr -> number : '$1'.
 expr -> identifier : '$1'.
 expr -> '(' expr ')' : '$2'.
@@ -45,6 +46,8 @@ stmt -> if '(' expr ')' stmt else stmt : {branch, aggregate_location('$1', '$7')
 stmt -> while '(' expr ')' stmt : {while, aggregate_location('$1', '$5'), '$3', '$5'}.
 stmt -> do stmt while '(' expr ')' : {do_while, aggregate_location('$1', '$6'), '$2', '$5'}.
 stmt -> for '(' stmt ';' expr ';' stmt ')' stmt : {for, aggregate_location('$1', '$9'), '$3', '$5', '$7', '$9'}.
+stmt -> print '(' expr ')' ';' : {print, aggregate_location('$1', '$5'), '$3'}.
+stmt -> println '(' expr ')' ';' : {println, aggregate_location('$1', '$5'), '$3'}.
 stmt -> '{' stmts '}' : {block, aggregate_location('$1', '$3'), '$2'}.
 
 %stmts -> stmt stmts : build_sequence(stmts, aggregate_location('$1', '$2'), '$1', '$2').

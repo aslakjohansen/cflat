@@ -7,6 +7,9 @@ ELSE       = else
 WHILE      = while
 DO         = do
 FOR        = for
+PRINT      = Console.Write
+PRINTLN    = Console.WriteLine
+STRING     = \"(\\.|[^"\\])*\"
 NUMBER     = [0-9]+
 IDENTIFIER = [_a-zAZ][_a-zAZ0-9]*
 WHITESPACE = [\s\t\n\r]
@@ -26,6 +29,9 @@ Rules.
 {WHILE}       : {token, {'while',    produce_position(TokenLine,TokenCol,TokenLen)}}.
 {DO}          : {token, {'do',       produce_position(TokenLine,TokenCol,TokenLen)}}.
 {FOR}         : {token, {'for',      produce_position(TokenLine,TokenCol,TokenLen)}}.
+{PRINT}       : {token, {'print',    produce_position(TokenLine,TokenCol,TokenLen)}}.
+{PRINTLN}     : {token, {'println',  produce_position(TokenLine,TokenCol,TokenLen)}}.
+{STRING}      : {token, {string,     produce_position(TokenLine,TokenCol,TokenLen), list_to_binary(lists:sublist(TokenChars, 2, length(TokenChars) - 2))}}.
 {NUMBER}      : {token, {number,     produce_position(TokenLine,TokenCol,TokenLen), list_to_integer(TokenChars)}}.
 {IDENTIFIER}  : {token, {identifier, produce_position(TokenLine,TokenCol,TokenLen), list_to_binary(TokenChars)}}.
 \*            : {token, {'*',    produce_position(TokenLine,TokenCol,TokenLen)}}.

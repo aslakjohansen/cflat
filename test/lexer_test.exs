@@ -126,4 +126,31 @@ defmodule CflatLexerTest do
     assert length(parts) == 1
     assert {:else, _} = keyword
   end
+  
+  test "while" do
+    parts = Cflat.tokenize("while")
+    [keyword] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:while, _} = keyword
+  end
+  
+  test "do" do
+    parts = Cflat.tokenize("do")
+    [keyword] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:do, _} = keyword
+  end
+  
+  test "for" do
+    parts = Cflat.tokenize("for")
+    [keyword] = parts
+    
+    assert is_list(parts)
+    assert length(parts) == 1
+    assert {:for, _} = keyword
+  end
 end

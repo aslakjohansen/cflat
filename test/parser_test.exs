@@ -293,4 +293,22 @@ defmodule CflatParserTest do
             },
             nil} = ast
   end
+  
+  test "loop for minimal" do
+    ast = parse("for(i=1 ; true ; i=1)")
+    
+    assert {:stmts, _,
+            {:for, _,
+             {:assign, _,
+              {:identifier, _, "i"},
+              {:number, _, 1}
+             },
+             {:true, _},
+             {:assign, _,
+              {:identifier, _, "i"},
+              {:number, _, 1}
+             }
+            },
+            nil} = ast
+  end
 end

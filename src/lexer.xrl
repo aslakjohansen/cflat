@@ -6,6 +6,7 @@ IF         = if
 ELSE       = else
 WHILE      = while
 DO         = do
+FOR        = for
 NUMBER     = [0-9]+
 IDENTIFIER = [_a-zAZ][_a-zAZ0-9]*
 WHITESPACE = [\s\t\n\r]
@@ -24,6 +25,7 @@ Rules.
 {ELSE}        : {token, {'else',     produce_position(TokenLine,TokenCol,TokenLen)}}.
 {WHILE}       : {token, {'while',    produce_position(TokenLine,TokenCol,TokenLen)}}.
 {DO}          : {token, {'do',       produce_position(TokenLine,TokenCol,TokenLen)}}.
+{FOR}         : {token, {'for',      produce_position(TokenLine,TokenCol,TokenLen)}}.
 {NUMBER}      : {token, {number,     produce_position(TokenLine,TokenCol,TokenLen), list_to_integer(TokenChars)}}.
 {IDENTIFIER}  : {token, {identifier, produce_position(TokenLine,TokenCol,TokenLen), list_to_binary(TokenChars)}}.
 \*            : {token, {'*',    produce_position(TokenLine,TokenCol,TokenLen)}}.

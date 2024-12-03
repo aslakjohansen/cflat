@@ -73,4 +73,10 @@ defmodule CflatInterpreterTest do
     
     env_assert(env, %{"i" => 0})
   end
+  
+  test "for simple" do
+    env = evaluate("int sum=0;for(int i=0; i<10 ;i=i-1)sum=sum+1;")
+    
+    env_assert(env, %{"sum" => 10})
+  end
 end

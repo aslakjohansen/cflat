@@ -5,10 +5,11 @@ This package implements the C♭ language (pronounced C-flat). It aims to implem
 Currently, it supports:
 - integers and booleans.
 - variable declarations and assignments in one statement.
-- variable assignments
+- variable assignments.
 - branches with `if` and `else`.
 - blocks.
 - while and do-while loops.
+- for loops are tokenized but fails to parse.
 
 Functionality implemented:
 - Lexing
@@ -23,7 +24,7 @@ The package can be installed by adding `cflat` to your list of dependencies in `
 ```elixir
 def deps do
   [
-    {:cflat, "~> 0.2.0"}
+    {:cflat, "~> 0.2.1"}
   ]
 end
 ```

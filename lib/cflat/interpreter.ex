@@ -102,6 +102,15 @@ defmodule Cflat.Interpreter do
       state
     end
   end
+  defp eval_stmt(state, {:do_while, _, stmt, condition} = full) do
+    state = eval_stmt(state, stmt)
+    {state, value} = eval_expr(state, condition)
+    if value==true do
+      eval_stmt(state, full)
+    else
+      state
+    end
+  end
   defp eval_stmt(_state, _stmt) do
     IO.puts("hits eval_stmt fallback :-(")
     nil

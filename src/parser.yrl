@@ -1,5 +1,5 @@
 Nonterminals stmts stmt expr name type.
-Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' eq neq lt gt leq geq number identifier true false if else while.
+Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' eq neq lt gt leq geq number identifier true false if else while do.
 Rootsymbol stmts.
 
 %% operator precedence and associativity
@@ -42,6 +42,7 @@ stmt -> name '=' expr ';' : {assign, aggregate_location('$1', '$4'), '$1', '$3'}
 stmt -> if '(' expr ')' stmt : {branch, aggregate_location('$1', '$5'), '$3', '$5', nil}.
 stmt -> if '(' expr ')' stmt else stmt : {branch, aggregate_location('$1', '$7'), '$3', '$5', '$7'}.
 stmt -> while '(' expr ')' stmt : {while, aggregate_location('$1', '$5'), '$3', '$5'}.
+stmt -> do stmt while '(' expr ')' : {do_while, aggregate_location('$1', '$6'), '$2', '$5'}.
 stmt -> '{' stmts '}' : {block, aggregate_location('$1', '$3'), '$2'}.
 
 %stmts -> stmt stmts : build_sequence(stmts, aggregate_location('$1', '$2'), '$1', '$2').

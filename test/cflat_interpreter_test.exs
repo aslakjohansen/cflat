@@ -67,4 +67,10 @@ defmodule CflatInterpreterTest do
     
     env_assert(env, %{"i" => 0})
   end
+  
+  test "do-while simple" do
+    env = evaluate("int i=10;do i=i-1;while (i>0)")
+    
+    env_assert(env, %{"i" => 0})
+  end
 end

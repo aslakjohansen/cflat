@@ -2,7 +2,7 @@
 
 ```elixir
 Mix.install([
-  {:cflat, "~> 0.1.4"},
+  {:cflat, "~> 0.2.0"},
   {:kino, "~> 0.14.2"}
 ])
 ```

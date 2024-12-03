@@ -44,6 +44,12 @@ defmodule CflatInterpreterTest do
     env_assert(env, %{"v" => "42 is the answer"})
   end
   
+  test "operator string + string" do
+    env = evaluate("string v = \"42\"+\" is the answer\";")
+    
+    env_assert(env, %{"v" => "42 is the answer"})
+  end
+  
   test "branch when true" do
     env = evaluate("int v = 0; if (true) v=1;")
     

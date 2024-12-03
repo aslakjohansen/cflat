@@ -21,7 +21,12 @@ defmodule Cflat.Interpreter do
   defp eval_expr(state, {:op_add, _, lhs_expr, rhs_expr}) do
     {state, lhs_value} = eval_expr(state, lhs_expr)
     {state, rhs_value} = eval_expr(state, rhs_expr)
-    {state, lhs_value + rhs_value}
+    result = cond do
+      is_integer(lhs_value) and is_integer(rhs_value) -> lhs_value + rhs_value
+      is_binary(lhs_value) -> "#{lhs_value}#{rhs_value}"
+      is_binary(rhs_value) -> "#{lhs_value}#{rhs_value}"
+    end
+    {state, result}
   end
   defp eval_expr(state, {:op_sub, _, lhs_expr, rhs_expr}) do
     {state, lhs_value} = eval_expr(state, lhs_expr)

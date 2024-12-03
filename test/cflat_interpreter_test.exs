@@ -26,6 +26,24 @@ defmodule CflatInterpreterTest do
     env_assert(env, %{"v1" => 42, "v2" => 56})
   end
   
+  test "operator int + int" do
+    env = evaluate("int v = 1+2;")
+    
+    env_assert(env, %{"v" => 3})
+  end
+  
+  test "operator string + int" do
+    env = evaluate("string v = \"the answer is \"+42;")
+    
+    env_assert(env, %{"v" => "the answer is 42"})
+  end
+  
+  test "operator int + string" do
+    env = evaluate("string v = 42+\" is the answer\";")
+    
+    env_assert(env, %{"v" => "42 is the answer"})
+  end
+  
   test "branch when true" do
     env = evaluate("int v = 0; if (true) v=1;")
     

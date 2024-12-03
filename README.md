@@ -30,3 +30,7 @@ def deps do
 end
 ```
 The docs can be found at <https://hexdocs.pm/cflat>.
+
+## Use
+
+Open the [demo](examples/cflat_demo.livemd) in Livebook.

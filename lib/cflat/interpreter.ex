@@ -170,9 +170,12 @@ defmodule Cflat.Interpreter do
       iex> "int i = 42;" |> Cflat.tokenize() |> Cflat.parse() |> Cflat.Interpreter.evaluate()
       %{"i" => 42}
   
+      iex> "int i = j + 1;" |> Cflat.tokenize() |> Cflat.parse() |> Cflat.Interpreter.evaluate(%{"j" => 42})
+      %{"i" => 43, "j" => 42}
+  
   """
-  def evaluate(st) do
-    output_state = eval_stmts(%{}, st)
+  def evaluate(st, env\\%{}) do
+    output_state = eval_stmts(env, st)
     output_state
   end
 end

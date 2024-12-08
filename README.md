@@ -11,6 +11,7 @@ Currently, it supports:
 - while and do-while loops.
 - for loops are tokenized but fails to parse.
 - strings can be printed but is not handled nicely.
+- optional initial environment (map from variable names to values)
 
 Functionality implemented:
 - Lexing

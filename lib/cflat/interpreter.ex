@@ -170,11 +170,22 @@ defmodule Cflat.Interpreter do
       iex> "int i = 42;" |> Cflat.tokenize() |> Cflat.parse() |> Cflat.Interpreter.evaluate()
       %{"i" => 42}
   
+  """
+  
+  def evaluate(st) do
+    evaluate(st, %{})
+  end
+  
+  @doc """
+  Evaluate program in syntax tree form in environment
+  
+  ## Examples
+  
       iex> "int i = j + 1;" |> Cflat.tokenize() |> Cflat.parse() |> Cflat.Interpreter.evaluate(%{"j" => 42})
       %{"i" => 43, "j" => 42}
   
   """
-  def evaluate(st, env\\%{}) do
+  def evaluate(st, env) when is_map(env) do
     output_state = eval_stmts(env, st)
     output_state
   end

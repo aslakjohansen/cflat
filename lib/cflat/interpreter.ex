@@ -99,9 +99,8 @@ defmodule Cflat.Interpreter do
     IO.puts(value)
     state
   end
-  defp eval_stmt_simple(_state, stmt) do
+  defp eval_stmt_simple(_state, _stmt) do
     IO.puts("hits eval_stmt_simple fallback :-(")
-    IO.puts("offending statement: #{stmt}")
     nil
   end
   
@@ -151,9 +150,8 @@ defmodule Cflat.Interpreter do
     |> eval_stmt_simple(stmt_init)
     |> eval_stmt_complex({:for, location, nil, condition, stmt_update, stmt_body})
   end
-  defp eval_stmt_complex(_state, stmt) do
+  defp eval_stmt_complex(_state, _stmt) do
     IO.puts("hits eval_stmt_complex fallback :-(")
-    IO.puts("offending statement: #{stmt}")
     nil
   end
   
@@ -169,9 +167,8 @@ defmodule Cflat.Interpreter do
   defp eval_stmt(state, {:stmt_complex, _, stmt} = _outer_stmt) do
     eval_stmt_complex(state, stmt)
   end
-  defp eval_stmt(_state, stmt) do
+  defp eval_stmt(_state, _stmt) do
     IO.puts("hits eval_stmt fallback :-(")
-    IO.puts("offending statement: #{stmt}")
     nil
   end
   
@@ -185,9 +182,8 @@ defmodule Cflat.Interpreter do
     state = eval_stmt(state, head)
     eval_stmts(state, tail)
   end
-  defp eval_stmts(_state, stmts) do
+  defp eval_stmts(_state, _stmts) do
     IO.puts("hits eval_stmts fallback :-(")
-    IO.puts("offending statement: #{stmts}")
     nil
   end
   

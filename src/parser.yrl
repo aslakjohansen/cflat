@@ -50,9 +50,7 @@ stmt -> print '(' expr ')' ';' : {print, aggregate_location('$1', '$5'), '$3'}.
 stmt -> println '(' expr ')' ';' : {println, aggregate_location('$1', '$5'), '$3'}.
 stmt -> '{' stmts '}' : {block, aggregate_location('$1', '$3'), '$2'}.
 
-%stmts -> stmt stmts : build_sequence(stmts, aggregate_location('$1', '$2'), '$1', '$2').
 stmts -> stmt stmts : {stmts, aggregate_location('$1', '$2'), '$1', '$2'}.
-%stmts -> stmt : {stmts, aggregate_location('$1', '$1'), ['$1']}.
 stmts -> stmt : {stmts, aggregate_location('$1', '$1'), '$1', nil}.
 
 Erlang code.

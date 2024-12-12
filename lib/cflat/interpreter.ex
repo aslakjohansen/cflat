@@ -78,21 +78,37 @@ defmodule Cflat.Interpreter do
     nil
   end
   
-  defp eval_stmt(state, nil) do
+  defp eval_stmt_simple(state, nil) do
     state
   end
-  defp eval_stmt(state, {:assign, _, {:name, _, name}, rhs}) do
+  defp eval_stmt_simple(state, {:assign, _, {:name, _, name}, rhs}) do
     {state, value} = eval_expr(state, rhs)
     state |> Map.put(name, value)
   end
-  defp eval_stmt(state, {:declassign, _, {:type, _, _type}, {:name, _, name}, rhs}) do
+  defp eval_stmt_simple(state, {:declassign, _, {:type, _, _type}, {:name, _, name}, rhs}) do
     {state, value} = eval_expr(state, rhs)
     state |> Map.put(name, value)
   end
-  defp eval_stmt(state, {:block, _, stmts}) do
+  defp eval_stmt_simple(state, {:print, _, expr}) do
+    {state, value} = eval_expr(state, expr)
+    IO.write(value)
+    state
+  end
+  defp eval_stmt_simple(state, {:println, _, expr}) do
+    {state, value} = eval_expr(state, expr)
+    IO.puts(value)
+    state
+  end
+  defp eval_stmt_simple(_state, stmt) do
+    IO.puts("hits eval_stmt_simple fallback :-(")
+    IO.puts("offending statement: #{stmt}")
+    nil
+  end
+  
+  defp eval_stmt_complex(state, {:block, _, stmts}) do
     eval_stmts(state, stmts)
   end
-  defp eval_stmt(state, {:branch, _, condition, true_stmt, false_stmt}) do
+  defp eval_stmt_complex(state, {:branch, _, condition, true_stmt, false_stmt}) do
     {state, value} = eval_expr(state, condition)
     if value==true do
       eval_stmt(state, true_stmt)
@@ -100,65 +116,78 @@ defmodule Cflat.Interpreter do
       eval_stmt(state, false_stmt)
     end
   end
-  defp eval_stmt(state, {:while, _, condition, stmt} = full) do
+  defp eval_stmt_complex(state, {:while, _, condition, stmt} = full) do
     {state, value} = eval_expr(state, condition)
     if value==true do
       state
       |> eval_stmt(stmt)
-      |> eval_stmt(full)
+      |> eval_stmt_complex(full)
     else
       state
     end
   end
-  defp eval_stmt(state, {:do_while, _, stmt, condition} = full) do
+  defp eval_stmt_complex(state, {:do_while, _, stmt, condition} = full) do
     state = eval_stmt(state, stmt)
     {state, value} = eval_expr(state, condition)
     if value==true do
-      eval_stmt(state, full)
+      eval_stmt_complex(state, full)
     else
       state
     end
   end
-  defp eval_stmt(state, {:for, _, nil, condition, stmt_update, stmt_body} = full) do
+  defp eval_stmt_complex(state, {:for, _, nil, condition, stmt_update, stmt_body} = full) do
     {state, value} = eval_expr(state, condition)
     if value==true do
       state
       |> eval_stmt(stmt_body)
-      |> eval_stmt(stmt_update)
-      |> eval_stmt(full)
+      |> eval_stmt_simple(stmt_update)
+      |> eval_stmt_complex(full)
     else
       state
     end
   end
-  defp eval_stmt(state, {:for, location, stmt_init, condition, stmt_update, stmt_body}) do
+  defp eval_stmt_complex(state, {:for, location, stmt_init, condition, stmt_update, stmt_body}) do
     state
-    |> eval_stmt(stmt_init)
-    |> eval_stmt({:for, location, nil, condition, stmt_update, stmt_body})
+    |> eval_stmt_simple(stmt_init)
+    |> eval_stmt_complex({:for, location, nil, condition, stmt_update, stmt_body})
   end
-  defp eval_stmt(state, {:print, _, expr}) do
-    {state, value} = eval_expr(state, expr)
-    IO.write(value)
+  defp eval_stmt_complex(_state, stmt) do
+    IO.puts("hits eval_stmt_complex fallback :-(")
+    IO.puts("offending statement: #{stmt}")
+    nil
+  end
+  
+  defp eval_stmt(state, {:stmt_nil} = _stmt) do
     state
   end
-  defp eval_stmt(state, {:println, _, expr}) do
-    {state, value} = eval_expr(state, expr)
-    IO.puts(value)
+  defp eval_stmt(state, nil = _stmt) do
     state
   end
-  defp eval_stmt(_state, _stmt) do
+  defp eval_stmt(state, {:stmt_simple, _, stmt} = _outer_stmt) do
+    eval_stmt_simple(state, stmt)
+  end
+  defp eval_stmt(state, {:stmt_complex, _, stmt} = _outer_stmt) do
+    eval_stmt_complex(state, stmt)
+  end
+  defp eval_stmt(_state, stmt) do
     IO.puts("hits eval_stmt fallback :-(")
+    IO.puts("offending statement: #{stmt}")
     nil
   end
   
   defp eval_stmts(state, nil) do
     state
   end
+  defp eval_stmts(state, {:stmts, _, head, nil}) do
+    _state = eval_stmt(state, head)
+  end
   defp eval_stmts(state, {:stmts, _, head, tail}) do
     state = eval_stmt(state, head)
     eval_stmts(state, tail)
   end
-  defp eval_stmts(_state, _stmts) do
+  defp eval_stmts(_state, stmts) do
     IO.puts("hits eval_stmts fallback :-(")
+    IO.puts("offending statement: #{stmts}")
     nil
   end
   

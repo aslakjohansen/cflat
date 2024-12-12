@@ -8,8 +8,7 @@ Currently, it supports:
 - variable assignments.
 - branches with `if` and `else`.
 - blocks.
-- while and do-while loops.
-- for loops are tokenized but fails to parse.
+- `while`, `do-while` and `for` loops.
 - strings can be printed but is not handled nicely.
 - optional initial environment (map from variable names to values)
 

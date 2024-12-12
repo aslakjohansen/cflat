@@ -1,4 +1,4 @@
-Nonterminals stmts stmt expr name type.
+Nonterminals stmts stmt stmt_nil stmt_simple stmt_complex expr name type.
 Terminals '+' '-' '*' '/' '(' ')' '=' ';' '[' ']' '{' '}' eq neq lt gt leq geq string number identifier true false if else while do for print println.
 Rootsymbol stmts.
 
@@ -38,17 +38,21 @@ expr -> expr gt expr  : {op_gt, aggregate_location('$1', '$3'), '$1', '$3'}.
 expr -> expr leq expr : {op_leq, aggregate_location('$1', '$3'), '$1', '$3'}.
 expr -> expr geq expr : {op_geq, aggregate_location('$1', '$3'), '$1', '$3'}.
 
-stmt -> ';' : {empty, aggregate_location('$1', '$1')}.
-stmt -> type name '=' expr ';' : {declassign, aggregate_location('$1', '$4'), '$1', '$2', '$4'}.
-stmt -> name '=' expr ';' : {assign, aggregate_location('$1', '$4'), '$1', '$3'}.
-stmt -> if '(' expr ')' stmt : {branch, aggregate_location('$1', '$5'), '$3', '$5', nil}.
-stmt -> if '(' expr ')' stmt else stmt : {branch, aggregate_location('$1', '$7'), '$3', '$5', '$7'}.
-stmt -> while '(' expr ')' stmt : {while, aggregate_location('$1', '$5'), '$3', '$5'}.
-stmt -> do stmt while '(' expr ')' : {do_while, aggregate_location('$1', '$6'), '$2', '$5'}.
-stmt -> for '(' stmt ';' expr ';' stmt ')' stmt : {for, aggregate_location('$1', '$9'), '$3', '$5', '$7', '$9'}.
-stmt -> print '(' expr ')' ';' : {print, aggregate_location('$1', '$5'), '$3'}.
-stmt -> println '(' expr ')' ';' : {println, aggregate_location('$1', '$5'), '$3'}.
-stmt -> '{' stmts '}' : {block, aggregate_location('$1', '$3'), '$2'}.
+stmt_simple -> type name '=' expr : {declassign, aggregate_location('$1', '$4'), '$1', '$2', '$4'}.
+stmt_simple -> name '=' expr : {assign, aggregate_location('$1', '$3'), '$1', '$3'}.
+stmt_simple -> print '(' expr ')' : {print, aggregate_location('$1', '$4'), '$3'}.
+stmt_simple -> println '(' expr ')' : {println, aggregate_location('$1', '$4'), '$3'}.
+
+stmt_complex -> if '(' expr ')' stmt : {branch, aggregate_location('$1', '$5'), '$3', '$5', nil}.
+stmt_complex -> if '(' expr ')' stmt else stmt : {branch, aggregate_location('$1', '$7'), '$3', '$5', '$7'}.
+stmt_complex -> while '(' expr ')' stmt : {while, aggregate_location('$1', '$5'), '$3', '$5'}.
+stmt_complex -> do stmt while '(' expr ')' : {do_while, aggregate_location('$1', '$6'), '$2', '$5'}.
+stmt_complex -> for '(' stmt_simple ';' expr ';' stmt_simple ')' stmt : {for, aggregate_location('$1', '$9'), '$3', '$5', '$7', '$9'}.
+stmt_complex -> '{' stmts '}' : {block, aggregate_location('$1', '$3'), '$2'}.
+
+stmt -> ';' : {stmt_nil, aggregate_location('$1', '$1')}.
+stmt -> stmt_simple ';' : {stmt_simple, aggregate_location('$1', '$2'), '$1'}.
+stmt -> stmt_complex : {stmt_complex, aggregate_location('$1', '$1'), '$1'}.
 
 stmts -> stmt stmts : {stmts, aggregate_location('$1', '$2'), '$1', '$2'}.
 stmts -> stmt : {stmts, aggregate_location('$1', '$1'), '$1', nil}.

@@ -31,10 +31,12 @@ defmodule Cflat do
   ## Examples
   
       iex> "int i = 42;" |> Cflat.tokenize() |> Cflat.parse()
-      {:stmts, {{1, 1}, {1, 11}},
-       {:declassign, {{1, 1}, {1, 11}},
-        {:type, {{1, 1}, {1, 4}}, {:identifier, {{1, 1}, {1, 4}}, "int"}},
-        {:name, {{1, 5}, {1, 6}}, "i"}, {:number, {{1, 9}, {1, 11}}, 42}}, nil}
+      {:stmts, {{1, 1}, {1, 12}},
+       {:stmt_simple, {{1, 1}, {1, 12}},
+        {:declassign, {{1, 1}, {1, 11}},
+         {:type, {{1, 1}, {1, 4}}, {:identifier, {{1, 1}, {1, 4}}, "int"}},
+         {:name, {{1, 5}, {1, 6}}, "i"}, {:number, {{1, 9}, {1, 11}}, 42}}}, nil}
+
   
   """
   def parse(tokens) do

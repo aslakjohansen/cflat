@@ -21,9 +21,9 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:number, _, 42}
-             }
+                {:name, _, "var"},
+                {:number, _, 42}
+              }
             },
             nil} = ast
   end
@@ -34,12 +34,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_add, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_add, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -50,12 +50,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_sub, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_sub, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -66,12 +66,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_mul, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_mul, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -82,12 +82,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_div, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_div, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -98,12 +98,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_eq, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_eq, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -114,12 +114,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_neq, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_neq, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -130,12 +130,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_lt, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_lt, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -146,12 +146,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_gt, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_gt, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -162,12 +162,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_leq, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_leq, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -178,12 +178,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:assign, _,
-               {:name, _, "var"},
-               {:op_geq, _,
-                {:number, _, 1},
-                {:number, _, 2}
-               }
-             }
+                {:name, _, "var"},
+                {:op_geq, _,
+                  {:number, _, 1},
+                  {:number, _, 2}
+                }
+              }
             },
             nil} = ast
   end
@@ -194,10 +194,10 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:branch, _,
-               {:true, _},
-               {:stmt_nil, _},
-               nil
-             }
+                {:true, _},
+                {:stmt_nil, _},
+                nil
+              }
             },
             nil} = ast
   end
@@ -208,10 +208,10 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:branch, _,
-               {:true, _},
-               {:stmt_nil, _},
-               {:stmt_nil, _}
-             }
+                {:true, _},
+                {:stmt_nil, _},
+                {:stmt_nil, _}
+              }
             },
             nil} = ast
   end
@@ -221,9 +221,9 @@ defmodule CflatParserTest do
     
     assert {:stmts, _,
             {:stmt_complex, _,
-              {:block, _,
-               {:stmts, _, {:stmt_nil, _}, nil}
-             }
+               {:block, _,
+                 {:stmts, _, {:stmt_nil, _}, nil}
+               }
             },
             nil} = ast
   end
@@ -233,20 +233,20 @@ defmodule CflatParserTest do
     
     assert {:stmts, _,
             {:stmt_complex, _,
-              {:branch, _,
-               {:true, _},
-               {:stmt_complex, _,
-                 {:block, _,
-                  {:stmts, _,
-                   {:stmt_nil, _},
-                   nil
-                  }
-                }
-               },
-               nil
-             }
-            },
-            nil} = ast
+               {:branch, _,
+                 {:true, _},
+                 {:stmt_complex, _,
+                   {:block, _,
+                     {:stmts, _,
+                       {:stmt_nil, _},
+                       nil
+                     }
+                   }
+                 },
+                 nil
+               }
+             },
+             nil} = ast
   end
   
   test "branch minimal block with else" do
@@ -255,24 +255,24 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:branch, _,
-               {:true, _},
-               {:stmt_complex, _,
-                 {:block, _,
-                  {:stmts, _,
-                   {:stmt_nil, _},
-                   nil
+                {:true, _},
+                {:stmt_complex, _,
+                  {:block, _,
+                    {:stmts, _,
+                      {:stmt_nil, _},
+                      nil
+                    }
+                  }
+                },
+                {:stmt_complex, _,
+                  {:block, _,
+                    {:stmts, _,
+                      {:stmt_nil, _},
+                      nil
+                    }
                   }
                 }
-               },
-               {:stmt_complex, _,
-                 {:block, _,
-                  {:stmts, _,
-                   {:stmt_nil, _},
-                   nil
-                  }
-                 }
-               }
-             }
+              }
             },
             nil} = ast
   end
@@ -283,9 +283,9 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:while, _,
-               {:true, _},
-               {:stmt_nil, _}
-             }
+                {:true, _},
+                {:stmt_nil, _}
+              }
             },
             nil} = ast
   end
@@ -296,16 +296,16 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:while, _,
-               {:true, _},
-               {:stmt_complex, _,
-                 {:block, _,
-                  {:stmts, _,
-                   {:stmt_nil, _},
-                   nil
+                {:true, _},
+                {:stmt_complex, _,
+                  {:block, _,
+                    {:stmts, _,
+                      {:stmt_nil, _},
+                      nil
+                    }
                   }
                 }
-               }
-             }
+              }
             },
             nil} = ast
   end
@@ -316,14 +316,14 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:while, _,
-               {:true, _},
+                {:true, _},
                 {:stmt_simple, _,
-                 {:assign, _,
-                  {:name, _, "v"},
-                  {:number, _, 42}
-                 }
-               }
-             }
+                  {:assign, _,
+                    {:name, _, "v"},
+                    {:number, _, 42}
+                  }
+                }
+              }
             },
             nil} = ast
   end
@@ -334,12 +334,12 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:while, _,
-               {:op_eq, _,
-                {:identifier, _, "i"},
-                {:number, _, 42}
-               },
-               {:stmt_nil, _}
-             }
+                {:op_eq, _,
+                  {:identifier, _, "i"},
+                  {:number, _, 42}
+                },
+                {:stmt_nil, _}
+              }
             },
             nil} = ast
   end
@@ -350,17 +350,17 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_complex, _,
               {:for, _,
-               {:assign, _,
-                {:name, _, "i"},
-                {:number, _, 1}
-               },
-               {:true, _},
-               {:assign, _,
-                {:name, _, "i"},
-                {:number, _, 1}
-               },
-               {:stmt_nil, _}
-             }
+                {:assign, _,
+                  {:name, _, "i"},
+                  {:number, _, 1}
+                },
+                {:true, _},
+                {:assign, _,
+                 {:name, _, "i"},
+                  {:number, _, 1}
+                },
+                {:stmt_nil, _}
+              }
             },
             nil} = ast
   end
@@ -371,8 +371,8 @@ defmodule CflatParserTest do
     assert {:stmts, _,
             {:stmt_simple, _,
               {:print, _,
-               {:string, _, "hello"}
-             }
+                {:string, _, "hello"}
+              }
             },
             nil} = ast
   end

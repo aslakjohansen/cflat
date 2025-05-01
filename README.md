@@ -9,7 +9,7 @@ Currently, it supports:
 - branches with `if` and `else`.
 - blocks.
 - `while`, `do-while` and `for` loops.
-- strings can be printed but is not handled nicely.
+- strings can be printed but are not handled nicely.
 - optional initial environment (map from variable names to values)
 
 Functionality implemented:
